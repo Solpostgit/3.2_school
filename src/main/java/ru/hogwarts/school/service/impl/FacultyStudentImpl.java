@@ -1,13 +1,16 @@
 package ru.hogwarts.school.service.impl;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
+@Service
 public class FacultyStudentImpl implements FacultyService {
 
     private final Map<Long, Faculty> faculties = new HashMap<>();
@@ -43,5 +46,13 @@ public class FacultyStudentImpl implements FacultyService {
     @Override
     public Faculty delete(Long id) {
         return faculties.remove(id);
+    }
+
+    @Override
+    public List<Faculty> getByColor(String color) {
+        return faculties.values()
+                .stream()
+                .filter(it -> it.getColor().equals(color))
+                .collect(Collectors.toList());
     }
 }
