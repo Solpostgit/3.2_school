@@ -8,6 +8,6 @@ public interface StudentService {
     Student add(Student student);
     Student get(Long id);
     Student update(Long id, Student student);
-    Student delete(Long id);
+    void delete(Long id);
     List<Student> getByAge(int age);
 }
