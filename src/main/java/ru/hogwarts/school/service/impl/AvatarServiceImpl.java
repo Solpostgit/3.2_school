@@ -1,7 +1,11 @@
 package ru.hogwarts.school.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
@@ -12,10 +16,13 @@ import ru.hogwarts.school.service.AvatarService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class AvatarServiceImpl implements AvatarService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     private final StudentRepository studentRepository;
 
@@ -43,7 +50,15 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long id) {
+        logger.info("findAvatar method was invoked");
         return avatarRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Avatar> getPaginatedAvatars(int pageNumber, int pageSize) {
+        logger.info("getPaginatedAvatars method was invoked");
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 
     private String getExtensions(String fileName) {

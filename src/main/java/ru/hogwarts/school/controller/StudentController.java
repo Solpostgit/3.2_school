@@ -71,4 +71,34 @@ public class StudentController {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("getStudentsCount")
+    public int getStudentsCount() {
+        return studentService.getStudentsCount();
+    }
+    @GetMapping("getAverageAge")
+    public int getAverageAge() {
+        return studentService.getAverageAge();
+    }
+    @GetMapping("getLastFive")
+    public List<Student> getLastFive() {
+        return studentService.getLastFive();
+    }
+    @GetMapping("startsWithA")
+    public List<String> getAllStudentsStartsWithA() {
+        return studentService.getAllStudentsStartsWithA();
+    }
+    @GetMapping("averageAgeWithStreams")
+    public Double getAverageAgeWithStreams() {
+        return studentService.getAverageAgeWithStreams();
+    }
+
+    @GetMapping("print-parallel")
+    public void printParallel() {
+        studentService.printParallel();
+    }
+
+    @GetMapping("print-synchronized")
+    public void printSynchronized() {
+        studentService.printSynchronized();
+    }
 }
